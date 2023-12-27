@@ -1,20 +1,22 @@
 import requests
 
+# this API with free version is 100 searches per day
+
 API_KEY = open('./API_KEY').read()
 SEARCH_ENGINE_ID = open('./SEARCH_ENGINE_ID').read()
 
-search_query = 'NeuralNine books'
+search_query = 'fruit apple'
 
 url = 'https://www.googleapis.com/customsearch/v1'
 params = {
     'q':search_query,
     'key':API_KEY,
     'cx':SEARCH_ENGINE_ID,
-    
+    'search_type':'image'
 }
 
 response = requests.get(url, params=params)
-results = response.json()
+results = response.json()['items']
 
-if 'items' in results:
-    print(results['items'][0]['link'])
+for item in results:
+    print(item['link'])
